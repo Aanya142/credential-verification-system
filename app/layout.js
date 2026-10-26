@@ -1,9 +1,10 @@
 import "./globals.css";
 import Link from "next/link";
+import { ShieldCheck, Award, FileSearch } from "lucide-react";
 
 export const metadata = {
-  title: "Academic Credential Verification System",
-  description: "Cryptographic Certificate Issuance & Verification using RSA-SHA256 digital signatures.",
+  title: "TrustCert • Decentralized Credential Verification",
+  description: "Cryptographic Certificate Issuance & Verification using 2048-bit RSA-SHA256 digital signatures.",
 };
 
 export default function RootLayout({ children }) {
@@ -12,13 +13,24 @@ export default function RootLayout({ children }) {
       <body>
         <nav className="nav">
           <Link href="/" className="brand">
-            <span className="brand-icon">✓</span>
-            <span>Academic Credential Verification</span>
+            <div className="brand-icon">
+              <ShieldCheck size={20} />
+            </div>
+            <span>Trust<b>Cert</b></span>
+            <span className="brand-pill">RSA-2048</span>
           </Link>
           <div className="nav-links">
-            <Link href="/">Overview</Link>
-            <Link href="/issue">Issue Certificate</Link>
-            <Link href="/verify">Verify</Link>
+            <Link href="/">Dashboard</Link>
+            <Link href="/issue">
+              <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+                <Award size={15} /> Issue Degree
+              </span>
+            </Link>
+            <Link href="/verify">
+              <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+                <FileSearch size={15} /> Verifier
+              </span>
+            </Link>
           </div>
         </nav>
         <main className="main">{children}</main>

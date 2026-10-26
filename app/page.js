@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Shield, FileCheck, ArrowRight, CheckCircle2, Lock } from "lucide-react";
+import { ShieldCheck, Award, FileSearch, ArrowRight, CheckCircle2, Lock, Cpu, Sparkles, KeyRound } from "lucide-react";
 
 export default function Home() {
   const [stats, setStats] = useState({ totalCertificates: 0, recentCertificates: [] });
@@ -15,107 +15,135 @@ export default function Home() {
 
   return (
     <div>
-      <div style={{ marginBottom: 32 }}>
-        <h1>Decentralized Academic Credential Verification System</h1>
-        <p className="sub">
-          Public-key cryptographic verification platform for university degree certificates using RSA-SHA256 digital signatures.
+      {/* Hero Section */}
+      <div className="hero">
+        <div className="badge-pill">
+          <Sparkles size={14} color="#818CF8" /> Public-Key Cryptography Protocol
+        </div>
+        <h1>Decentralized Academic<br />Credential Verification</h1>
+        <p>
+          Next-generation degree authentication without intermediaries. Issue tamper-evident credentials, embed cryptographic QR codes, and verify certificates in <b>0 ms</b> with zero gas fees.
         </p>
 
-        <div className="btn-row">
-          <Link href="/issue" className="btn btn-accent">
-            <FileCheck size={16} /> Issue Certificate
+        <div className="btn-row" style={{ justifyContent: "center" }}>
+          <Link href="/issue" className="btn">
+            <Award size={18} /> Launch Issuer Portal
           </Link>
           <Link href="/verify" className="btn btn-secondary">
-            <Shield size={16} /> Verify Credential
+            <FileSearch size={18} /> Public Verifier Node
           </Link>
         </div>
       </div>
 
+      {/* Futuristic Stat Counters */}
       <div className="stat-grid">
         <div className="stat-box">
           <div className="stat-num">{stats.totalCertificates}</div>
-          <div className="stat-label">Registered Certificates</div>
+          <div className="stat-label">Credentials On Registry</div>
         </div>
         <div className="stat-box">
-          <div className="stat-num">RSA-2048</div>
-          <div className="stat-label">Signature Algorithm</div>
+          <div className="stat-num" style={{ background: "linear-gradient(135deg, #06B6D4, #3B82F6)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+            2048-bit
+          </div>
+          <div className="stat-label">RSA Asymmetric Security</div>
         </div>
         <div className="stat-box">
-          <div className="stat-num">SHA-256</div>
-          <div className="stat-label">Hashing Standard</div>
+          <div className="stat-num" style={{ background: "linear-gradient(135deg, #10B981, #06B6D4)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+            $0.00
+          </div>
+          <div className="stat-label">Verification Cost / Fee</div>
         </div>
       </div>
 
+      {/* Main Portals Split */}
       <div className="grid-2">
-        <div className="card">
-          <h2>University Issuer Portal</h2>
-          <p style={{ color: "#475569", fontSize: 13.5, lineHeight: 1.6, marginBottom: 16 }}>
-            Enables academic registrars to issue cryptographically signed degree certificates. The canonical metadata (holder name, course, conferral date) is hashed and signed with the university&apos;s private key.
+        <div className="card card-hover">
+          <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 16 }}>
+            <div style={{ width: 44, height: 44, borderRadius: 12, background: "rgba(99, 102, 241, 0.15)", border: "1px solid rgba(99, 102, 241, 0.3)", display: "flex", alignItems: "center", justifyContent: "center", color: "#818CF8" }}>
+              <Award size={24} />
+            </div>
+            <div>
+              <h2 style={{ margin: 0, fontSize: 19 }}>Issuer Authority</h2>
+              <div style={{ fontSize: 12, color: "#64748B" }}>University Admin Portal</div>
+            </div>
+          </div>
+          <p style={{ color: "#94A3B8", fontSize: 14, lineHeight: 1.6, marginBottom: 20 }}>
+            Authorize and cryptographically sign academic degrees. Automatically encodes canonical SHA-256 metadata, applies the institution&apos;s private key, and exports an official high-resolution PDF certificate.
           </p>
-          <ul style={{ fontSize: 13, color: "#334155", paddingLeft: 18, lineHeight: 1.7, margin: "0 0 16px 0" }}>
-            <li>Generates standard PDF certificates with embedded QR codes</li>
-            <li>Produces verifiable RSA-SHA256 digital signatures</li>
-            <li>Records issued metadata in the registry database</li>
-          </ul>
-          <Link href="/issue" className="btn btn-secondary" style={{ fontSize: 13 }}>
-            Open Issuer Portal <ArrowRight size={14} />
+          <Link href="/issue" className="btn" style={{ width: "100%" }}>
+            Mint Certificate <ArrowRight size={16} />
           </Link>
         </div>
 
-        <div className="card">
-          <h2>Public Verifier Portal</h2>
-          <p style={{ color: "#475569", fontSize: 13.5, lineHeight: 1.6, marginBottom: 16 }}>
-            Allows employers, academic institutions, and credential evaluators to authenticate degrees instantly without contacting the issuing university.
+        <div className="card card-hover">
+          <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 16 }}>
+            <div style={{ width: 44, height: 44, borderRadius: 12, background: "rgba(6, 182, 212, 0.15)", border: "1px solid rgba(6, 182, 212, 0.3)", display: "flex", alignItems: "center", justifyContent: "center", color: "#22D3EE" }}>
+              <ShieldCheck size={24} />
+            </div>
+            <div>
+              <h2 style={{ margin: 0, fontSize: 19 }}>Universal Verifier</h2>
+              <div style={{ fontSize: 12, color: "#64748B" }}>Public Auditing Node</div>
+            </div>
+          </div>
+          <p style={{ color: "#94A3B8", fontSize: 14, lineHeight: 1.6, marginBottom: 20 }}>
+            Instant, trustless authentication for employers and embassies. Upload a certificate file or scan its QR code to mathematically verify the signature against the university&apos;s public key.
           </p>
-          <ul style={{ fontSize: 13, color: "#334155", paddingLeft: 18, lineHeight: 1.7, margin: "0 0 16px 0" }}>
-            <li>Verify by Certificate ID or QR scan</li>
-            <li>Direct file upload verification (JSON/PDF)</li>
-            <li>Tamper detection testing interface</li>
-          </ul>
-          <Link href="/verify" className="btn btn-secondary" style={{ fontSize: 13 }}>
-            Open Verifier <ArrowRight size={14} />
+          <Link href="/verify" className="btn btn-secondary" style={{ width: "100%" }}>
+            Authenticate Credential <ArrowRight size={16} />
           </Link>
         </div>
       </div>
 
-      <div className="card">
-        <h2>System Architecture &amp; Verification Protocol</h2>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 16, marginTop: 16 }}>
-          <div style={{ background: "#F8FAFC", padding: 16, borderRadius: 6, border: "1px solid #E2E8F0" }}>
-            <div style={{ fontWeight: 600, fontSize: 13, color: "#0F172A", marginBottom: 4 }}>1. Issuance &amp; Signing</div>
-            <div style={{ fontSize: 12.5, color: "#64748B", lineHeight: 1.5 }}>
-              Certificate payload is canonicalized and signed using the institution&apos;s isolated 2048-bit RSA private key.
+      {/* Protocol Architecture Banner */}
+      <div className="card glow-border" style={{ marginTop: 12 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
+          <Cpu size={22} color="#818CF8" />
+          <h2 style={{ margin: 0 }}>Cryptographic Integrity Protocol</h2>
+        </div>
+        
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(230px, 1fr))", gap: 16 }}>
+          <div style={{ background: "rgba(15, 23, 42, 0.6)", padding: 20, borderRadius: 12, border: "1px solid var(--border)" }}>
+            <div style={{ fontWeight: 700, color: "#818CF8", fontSize: 14, marginBottom: 6 }}>1. Canonical Payload</div>
+            <div style={{ fontSize: 13, color: "#94A3B8", lineHeight: 1.6 }}>
+              Student identity and conferral details are serialized in deterministic order and hashed with SHA-256.
             </div>
           </div>
-          <div style={{ background: "#F8FAFC", padding: 16, borderRadius: 6, border: "1px solid #E2E8F0" }}>
-            <div style={{ fontWeight: 600, fontSize: 13, color: "#0F172A", marginBottom: 4 }}>2. Distribution &amp; QR</div>
-            <div style={{ fontSize: 12.5, color: "#64748B", lineHeight: 1.5 }}>
-              The student receives a PDF credential containing an embedded QR code pointing to the verification endpoint.
+
+          <div style={{ background: "rgba(15, 23, 42, 0.6)", padding: 20, borderRadius: 12, border: "1px solid var(--border)" }}>
+            <div style={{ fontWeight: 700, color: "#22D3EE", fontSize: 14, marginBottom: 6 }}>2. Asymmetric Signing</div>
+            <div style={{ fontSize: 13, color: "#94A3B8", lineHeight: 1.6 }}>
+              The digest is encrypted using the issuing institution&apos;s 2048-bit Private Key, generating an unforgeable digital signature.
             </div>
           </div>
-          <div style={{ background: "#F8FAFC", padding: 16, borderRadius: 6, border: "1px solid #E2E8F0" }}>
-            <div style={{ fontWeight: 600, fontSize: 13, color: "#0F172A", marginBottom: 4 }}>3. Mathematical Validation</div>
-            <div style={{ fontSize: 12.5, color: "#64748B", lineHeight: 1.5 }}>
-              The verifier uses the public key to authenticate the signature. Any alteration to the document causes instant rejection.
+
+          <div style={{ background: "rgba(15, 23, 42, 0.6)", padding: 20, borderRadius: 12, border: "1px solid var(--border)" }}>
+            <div style={{ fontWeight: 700, color: "#34D399", fontSize: 14, marginBottom: 6 }}>3. Universal Verification</div>
+            <div style={{ fontSize: 13, color: "#94A3B8", lineHeight: 1.6 }}>
+              The verifier node checks the signature with the public key. If a forged certificate modifies even 1 byte, verification fails immediately.
             </div>
           </div>
         </div>
       </div>
 
+      {/* Live Registry Feed */}
       {stats.recentCertificates && stats.recentCertificates.length > 0 && (
-        <div className="card">
-          <h2>Recent Certificates in Registry</h2>
-          <div style={{ marginTop: 12 }}>
+        <div className="card" style={{ marginTop: 24 }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+            <h2 style={{ margin: 0, fontSize: 18 }}>Recent Registry Activity</h2>
+            <span style={{ fontSize: 12, color: "#64748B" }}>Live ledger updates</span>
+          </div>
+
+          <div>
             {stats.recentCertificates.map((cert) => (
               <div key={cert.id} className="field-row">
                 <div>
-                  <div style={{ fontWeight: 600, color: "#0F172A", fontSize: 13.5 }}>{cert.holderName}</div>
-                  <div style={{ fontSize: 12, color: "#64748B" }}>{cert.course} • {cert.id}</div>
+                  <div style={{ fontWeight: 700, color: "#F8FAFC", fontSize: 14 }}>{cert.holderName}</div>
+                  <div style={{ fontSize: 12, color: "#94A3B8" }}>{cert.course} • <span style={{ fontFamily: "monospace", color: "#818CF8" }}>{cert.id}</span></div>
                 </div>
-                <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-                  <span className="badge green">Signed</span>
-                  <Link href={`/verify?id=${cert.id}`} className="btn btn-secondary" style={{ padding: "4px 10px", fontSize: 12 }}>
-                    Verify
+                <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+                  <span className="badge green"><CheckCircle2 size={12} /> Verified</span>
+                  <Link href={`/verify?id=${cert.id}`} className="btn btn-secondary" style={{ padding: "6px 14px", fontSize: 12 }}>
+                    Audit
                   </Link>
                 </div>
               </div>

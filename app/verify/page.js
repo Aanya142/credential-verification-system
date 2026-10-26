@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { Search, Upload, CheckCircle2, XCircle, RefreshCw, Download, RotateCcw } from "lucide-react";
+import { Search, Upload, CheckCircle2, XCircle, RefreshCw, Download, RotateCcw, ShieldCheck, Flame, Bug, Lock } from "lucide-react";
 
 export default function VerifyPage() {
   const [activeTab, setActiveTab] = useState("id");
@@ -45,7 +45,7 @@ export default function VerifyPage() {
         setEditable({ ...data.certificate });
       }
     } catch {
-      setLookupError("Unable to communicate with the verification service.");
+      setLookupError("Unable to communicate with the verification node.");
     } finally {
       setLoading(false);
     }
@@ -115,12 +115,12 @@ export default function VerifyPage() {
 
   function simulateNameAlteration() {
     if (!editable) return;
-    setEditable({ ...editable, holderName: "Rahul Verma" });
+    setEditable({ ...editable, holderName: "Malicious Hacker" });
   }
 
   function simulateCourseAlteration() {
     if (!editable) return;
-    setEditable({ ...editable, course: editable.course + " (Distinction)" });
+    setEditable({ ...editable, course: editable.course + " (Summa Cum Laude - FORGED)" });
   }
 
   function restoreOriginalData() {
@@ -131,10 +131,12 @@ export default function VerifyPage() {
 
   return (
     <div>
-      <div style={{ marginBottom: 24 }}>
-        <h1>Public Verification Portal</h1>
+      <div style={{ marginBottom: 28 }}>
+        <h1 style={{ display: "flex", alignItems: "center", gap: 12 }}>
+          <ShieldCheck size={32} color="#06B6D4" /> Public Verification Node
+        </h1>
         <p className="sub">
-          Verify certificate integrity against the issuing university&apos;s cryptographic public key.
+          Instant cryptographic validation of academic degrees against the issuing university&apos;s RSA public key.
         </p>
       </div>
 
@@ -143,41 +145,41 @@ export default function VerifyPage() {
           className={`tab ${activeTab === "id" ? "active" : ""}`}
           onClick={() => setActiveTab("id")}
         >
-          Verify by Certificate ID
+          <Search size={15} style={{ verticalAlign: -2, marginRight: 6 }} /> Audit by ID
         </button>
         <button
           className={`tab ${activeTab === "upload" ? "active" : ""}`}
           onClick={() => setActiveTab("upload")}
         >
-          Upload Certificate Metadata
+          <Upload size={15} style={{ verticalAlign: -2, marginRight: 6 }} /> Drop Credential File
         </button>
         <button
           className={`tab ${activeTab === "tamper" ? "active" : ""}`}
           onClick={() => setActiveTab("tamper")}
           disabled={!lookupResult}
         >
-          Tamper-Detection Test
+          <Flame size={15} style={{ verticalAlign: -2, marginRight: 6 }} /> Tamper-Testing Lab
         </button>
       </div>
 
       {activeTab === "id" && (
         <div className="card">
-          <label>Certificate ID</label>
-          <div style={{ display: "flex", gap: 10 }}>
+          <label>Enter Certificate ID</label>
+          <div style={{ display: "flex", gap: 12 }}>
             <input
               value={certId}
               onChange={(e) => setCertId(e.target.value)}
-              placeholder="e.g. CERT-MTIAUBYB"
+              placeholder="e.g. CERT-MVPM72QNOI0"
               style={{ flex: 1 }}
             />
-            <button onClick={() => lookup()} disabled={loading} style={{ marginTop: 0 }}>
-              {loading ? <RefreshCw className="animate-spin" size={14} /> : <Search size={14} />} Check
+            <button onClick={() => lookup()} disabled={loading} style={{ marginTop: 0, padding: "12px 24px" }}>
+              {loading ? <RefreshCw className="animate-spin" size={16} /> : <Search size={16} />} Verify
             </button>
           </div>
 
           {lookupError && (
             <div className="result-banner result-invalid">
-              <XCircle size={20} />
+              <XCircle size={24} />
               <div>
                 <div className="result-title">Record Not Found</div>
                 <div className="result-desc">{lookupError}</div>
@@ -212,18 +214,18 @@ export default function VerifyPage() {
                 }
               }}
             />
-            <Upload size={32} color="#64748B" style={{ margin: "0 auto 8px" }} />
-            <div style={{ fontWeight: 600, fontSize: 14, color: "#1E293B" }}>
-              Click to browse or drop certificate file
+            <Upload size={36} color="#06B6D4" style={{ margin: "0 auto 12px" }} />
+            <div style={{ fontWeight: 700, fontSize: 16, color: "#F8FAFC" }}>
+              Drop your Certificate File or Click to Browse
             </div>
             <p className="hint">
-              Supports metadata JSON files and certificates exported from Issuer portal
+              Supports JSON metadata exports or sample certificate files
             </p>
           </div>
 
           {uploadError && (
             <div className="result-banner result-invalid">
-              <XCircle size={20} />
+              <XCircle size={24} />
               <div>
                 <div className="result-title">Verification Error</div>
                 <div className="result-desc">{uploadError}</div>
@@ -234,40 +236,44 @@ export default function VerifyPage() {
       )}
 
       {lookupResult && (
-        <div className="card">
+        <div className="card glow-border" style={{ borderColor: lookupResult.valid ? "rgba(16, 185, 129, 0.4)" : "rgba(239, 68, 68, 0.4)" }}>
           {lookupResult.valid ? (
             <div className="result-banner result-valid" style={{ marginTop: 0 }}>
-              <CheckCircle2 size={24} color="#16A34A" />
+              <CheckCircle2 size={32} color="#10B981" />
               <div>
-                <div className="result-title">Valid Certificate — Signature Verified</div>
+                <div className="result-title" style={{ fontSize: 17 }}>
+                  VALID &amp; CRYPTOGRAPHICALLY AUTHENTIC
+                </div>
                 <div className="result-desc">
-                  The RSA-SHA256 signature matches the canonical metadata. This certificate is authentic and unmodified.
+                  The digital signature matches the university&apos;s public key. The degree is authentic and has never been modified.
                 </div>
               </div>
             </div>
           ) : (
             <div className="result-banner result-invalid" style={{ marginTop: 0 }}>
-              <XCircle size={24} color="#DC2626" />
+              <XCircle size={32} color="#EF4444" />
               <div>
-                <div className="result-title">Invalid Signature — Verification Failed</div>
+                <div className="result-title" style={{ fontSize: 17 }}>
+                  FORGERY / TAMPERING DETECTED!
+                </div>
                 <div className="result-desc">
-                  The digital signature does not match the presented certificate data. The document has been altered or signed by an unknown entity.
+                  The SHA-256 digest does not match the decrypted RSA signature. This certificate has been altered or created by an unauthorized key!
                 </div>
               </div>
             </div>
           )}
 
-          <div style={{ marginTop: 20 }}>
+          <div style={{ margin: "24px 0" }}>
             <div className="field-row">
               <span className="field-label">Certificate ID</span>
               <span className="field-val badge blue">{lookupResult.certificate.id}</span>
             </div>
             <div className="field-row">
-              <span className="field-label">Student Name</span>
+              <span className="field-label">Student Recipient</span>
               <span className="field-val">{lookupResult.certificate.holderName}</span>
             </div>
             <div className="field-row">
-              <span className="field-label">Degree</span>
+              <span className="field-label">Degree / Program</span>
               <span className="field-val">{lookupResult.certificate.course}</span>
             </div>
             <div className="field-row">
@@ -283,34 +289,37 @@ export default function VerifyPage() {
               target="_blank"
               rel="noreferrer"
             >
-              <Download size={14} /> Download PDF
+              <Download size={16} /> Download Official PDF
             </a>
             <button
               type="button"
-              className="btn secondary"
+              className="btn"
               onClick={() => setActiveTab("tamper")}
             >
-              Test Tampering Resistance
+              <Flame size={16} /> Test Tampering Resistance
             </button>
           </div>
         </div>
       )}
 
       {activeTab === "tamper" && editable && (
-        <div className="card">
-          <h2>Tamper-Detection Test Interface</h2>
-          <p className="hint" style={{ marginBottom: 14 }}>
-            Modify any field below to observe how the RSA signature verification fails when the payload differs from the original issued record.
+        <div className="card glow-border" style={{ borderColor: "rgba(245, 158, 11, 0.4)" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
+            <Bug size={24} color="#F59E0B" />
+            <h2 style={{ margin: 0 }}>Interactive Tamper-Detection Laboratory</h2>
+          </div>
+          <p className="hint" style={{ marginBottom: 20 }}>
+            Simulate an adversary attempting to alter a degree. Watch how asymmetric cryptography detects even single-character changes.
           </p>
 
-          <div style={{ display: "flex", gap: 8, marginBottom: 16, flexWrap: "wrap" }}>
-            <button type="button" className="btn-secondary" onClick={simulateNameAlteration} style={{ fontSize: 12, padding: "4px 10px" }}>
-              Simulate Name Change
+          <div style={{ display: "flex", gap: 10, marginBottom: 20, flexWrap: "wrap" }}>
+            <button type="button" className="btn-secondary" onClick={simulateNameAlteration} style={{ fontSize: 12, padding: "6px 14px" }}>
+              ⚡ Attack: Change Student Name
             </button>
-            <button type="button" className="btn-secondary" onClick={simulateCourseAlteration} style={{ fontSize: 12, padding: "4px 10px" }}>
-              Simulate Degree Alteration
+            <button type="button" className="btn-secondary" onClick={simulateCourseAlteration} style={{ fontSize: 12, padding: "6px 14px" }}>
+              ⚡ Attack: Forge Degree / Honors
             </button>
-            <button type="button" className="btn-secondary" onClick={restoreOriginalData} style={{ fontSize: 12, padding: "4px 10px" }}>
+            <button type="button" className="btn-secondary" onClick={restoreOriginalData} style={{ fontSize: 12, padding: "6px 14px" }}>
               <RotateCcw size={12} /> Reset to Original
             </button>
           </div>
@@ -321,7 +330,7 @@ export default function VerifyPage() {
             onChange={(e) => setEditable({ ...editable, holderName: e.target.value })}
           />
 
-          <label>Course / Program</label>
+          <label>Course / Degree</label>
           <input
             value={editable.course}
             onChange={(e) => setEditable({ ...editable, course: e.target.value })}
@@ -334,7 +343,7 @@ export default function VerifyPage() {
             onChange={(e) => setEditable({ ...editable, issueDate: e.target.value })}
           />
 
-          <label>Digital Signature (Base64)</label>
+          <label>RSA Digital Signature (Base64)</label>
           <textarea
             rows={3}
             value={editable.signature}
@@ -344,27 +353,28 @@ export default function VerifyPage() {
           <div className="btn-row">
             <button
               type="button"
-              className="primary-accent"
+              className="danger"
               onClick={testTamperVerification}
               disabled={tamperLoading}
+              style={{ width: "100%", padding: "14px" }}
             >
-              {tamperLoading ? "Re-Verifying Signature..." : "Verify Altered Payload"}
+              {tamperLoading ? "Checking SHA-256 with Public Key..." : "🔬 Test Cryptographic Signature Validity"}
             </button>
           </div>
 
           {tamperResult && (
             <div className={`result-banner ${tamperResult.valid ? "result-valid" : "result-invalid"}`}>
-              {tamperResult.valid ? <CheckCircle2 size={24} /> : <XCircle size={24} />}
+              {tamperResult.valid ? <CheckCircle2 size={32} /> : <XCircle size={32} />}
               <div>
                 <div className="result-title">
                   {tamperResult.valid
-                    ? "Signature Valid — Data Unaltered"
-                    : "Tamper Detected — Signature Check Failed"}
+                    ? "SIGNATURE MATCHES — NO TAMPERING DETECTED"
+                    : "TAMPERING CONFIRMED — SIGNATURE REJECTED!"}
                 </div>
                 <div className="result-desc">
                   {tamperResult.valid
-                    ? "The presented data matches the cryptographic signature."
-                    : "The computed SHA-256 digest of this data does not match the decrypted signature. The alteration has been mathematically rejected."}
+                    ? "The presented payload data matches the digital signature."
+                    : "Mathematical check failed: SHA-256 hash of this payload does not match the decrypted RSA signature. The degree is forged!"}
                 </div>
               </div>
             </div>
