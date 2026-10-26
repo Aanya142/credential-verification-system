@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
-import { Award, Download, ArrowRight, Copy, Check, Sparkles, Key } from "lucide-react";
+import { Award, Download, ArrowRight, Copy, Check, Key } from "lucide-react";
 
 export default function IssuePage() {
   const [holderName, setHolderName] = useState("");
@@ -36,7 +36,7 @@ export default function IssuePage() {
         setResult(data);
       }
     } catch {
-      setError("Could not connect to the cryptographic issuance service.");
+      setError("Could not connect to the issuance service.");
     } finally {
       setLoading(false);
     }
@@ -52,32 +52,32 @@ export default function IssuePage() {
   return (
     <div>
       <div style={{ marginBottom: 28 }}>
-        <h1 style={{ display: "flex", alignItems: "center", gap: 12 }}>
-          <Award size={32} color="#818CF8" /> Certificate Issuance Engine
+        <h1 style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          <Award size={30} color="#F97316" /> Certificate Issuance Engine
         </h1>
         <p className="sub">
           Generate tamper-proof academic credentials signed with the University&apos;s 2048-bit RSA Private Key.
         </p>
       </div>
 
-      {/* Quick Test Presets */}
-      <div style={{ display: "flex", gap: 10, alignItems: "center", marginBottom: 20, flexWrap: "wrap" }}>
-        <span style={{ fontSize: 13, color: "#94A3B8", fontWeight: 600 }}>Quick Presets:</span>
+      {/* Quick Fill Presets */}
+      <div style={{ display: "flex", gap: 8, alignItems: "center", marginBottom: 18, flexWrap: "wrap" }}>
+        <span style={{ fontSize: 13, color: "#71717A", fontWeight: 700 }}>Quick Fill:</span>
         <button
           type="button"
           className="btn-secondary"
-          style={{ padding: "6px 14px", fontSize: 12 }}
+          style={{ padding: "4px 12px", fontSize: 12 }}
           onClick={() => fillSample("Aanya Singh", "B.Tech Computer Science & Engineering")}
         >
-          🎓 Aanya Singh (B.Tech CSE)
+          Aanya Singh (B.Tech CSE)
         </button>
         <button
           type="button"
           className="btn-secondary"
-          style={{ padding: "6px 14px", fontSize: 12 }}
+          style={{ padding: "4px 12px", fontSize: 12 }}
           onClick={() => fillSample("Rohan Mehta", "Master of Business Administration (MBA)")}
         >
-          🎓 Rohan Mehta (MBA)
+          Rohan Mehta (MBA)
         </button>
       </div>
 
@@ -110,11 +110,11 @@ export default function IssuePage() {
             value={issueDate}
             onChange={(e) => setIssueDate(e.target.value)}
             required
-            style={{ maxWidth: 280 }}
+            style={{ maxWidth: 260 }}
           />
 
-          <div style={{ marginTop: 24 }}>
-            <button type="submit" disabled={loading} style={{ width: "100%", padding: "14px" }}>
+          <div style={{ marginTop: 22 }}>
+            <button type="submit" disabled={loading} style={{ width: "100%", padding: "13px" }}>
               {loading ? (
                 <>Signing with RSA-2048 &amp; Generating QR...</>
               ) : (
@@ -127,15 +127,15 @@ export default function IssuePage() {
         {error && <div className="result-banner result-invalid">{error}</div>}
       </div>
 
-      {/* Success Output Panel */}
+      {/* Result Card */}
       {result && (
-        <div className="card glow-border" style={{ border: "1px solid rgba(16, 185, 129, 0.4)", background: "rgba(16, 185, 129, 0.05)" }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 16 }}>
+        <div className="card" style={{ border: "2px solid #16A34A", background: "#F0FDF4" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 14 }}>
             <div>
-              <span className="badge green" style={{ marginBottom: 8 }}>Cryptographically Signed</span>
-              <h2 style={{ color: "#F8FAFC", margin: "4px 0" }}>Certificate Successfully Registered</h2>
-              <p style={{ color: "#94A3B8", fontSize: 13.5, margin: 0 }}>
-                This record has been canonicalized and signed. Permanent proof of degree completion.
+              <span className="badge green" style={{ marginBottom: 6 }}>Cryptographically Signed</span>
+              <h2 style={{ color: "#166534", margin: "4px 0" }}>Certificate Issued Successfully</h2>
+              <p style={{ color: "#52525B", fontSize: 13.5, margin: 0 }}>
+                This credential is now permanently verifiable using public-key cryptography.
               </p>
             </div>
 
@@ -146,18 +146,18 @@ export default function IssuePage() {
                 target="_blank"
                 rel="noreferrer"
               >
-                <Download size={16} /> Download Official PDF
+                <Download size={15} /> Download Official PDF
               </a>
               <Link href={`/verify?id=${result.certificate.id}`} className="btn">
-                Verify Now <ArrowRight size={16} />
+                Verify Now <ArrowRight size={15} />
               </Link>
             </div>
           </div>
 
-          <div style={{ margin: "24px 0" }}>
+          <div style={{ margin: "20px 0" }}>
             <div className="field-row">
               <span className="field-label">Certificate ID</span>
-              <span className="field-val badge blue">{result.certificate.id}</span>
+              <span className="field-val badge orange">{result.certificate.id}</span>
             </div>
             <div className="field-row">
               <span className="field-label">Student Recipient</span>
@@ -174,10 +174,10 @@ export default function IssuePage() {
           </div>
 
           <div className="grid-2">
-            <div style={{ textAlign: "center", background: "rgba(15, 23, 42, 0.7)", padding: 20, border: "1px solid var(--border)", borderRadius: 12 }}>
-              <img src={result.qrCodeDataUrl} alt="QR Code" width={160} height={160} style={{ borderRadius: 8, border: "6px solid white" }} />
-              <div style={{ fontSize: 13, fontWeight: 700, color: "#F8FAFC", marginTop: 12 }}>
-                Embedded Verifier QR
+            <div style={{ textAlign: "center", background: "#FFFFFF", padding: 18, border: "1.5px solid #18181B", borderRadius: 8, boxShadow: "2px 2px 0px #18181B" }}>
+              <img src={result.qrCodeDataUrl} alt="QR Code" width={160} height={160} style={{ borderRadius: 6, border: "1px solid #E4E4E7" }} />
+              <div style={{ fontSize: 13, fontWeight: 700, color: "#18181B", marginTop: 10 }}>
+                Verification QR Code
               </div>
               <p className="hint">Scannable by any mobile device to view verification node</p>
             </div>
@@ -189,12 +189,12 @@ export default function IssuePage() {
                   type="button"
                   className="btn-secondary"
                   onClick={copySignature}
-                  style={{ padding: "4px 10px", fontSize: 11, marginTop: 0 }}
+                  style={{ padding: "3px 8px", fontSize: 11, marginTop: 0 }}
                 >
                   {copied ? <><Check size={12} /> Copied</> : <><Copy size={12} /> Copy</>}
                 </button>
               </div>
-              <div className="mono" style={{ maxHeight: 150, overflowY: "auto", marginTop: 8 }}>
+              <div className="mono" style={{ maxHeight: 150, overflowY: "auto", marginTop: 6 }}>
                 {result.certificate.signature}
               </div>
               <p className="hint">
